@@ -1,4 +1,5 @@
-__version__ = "0.6.0"
+# -*- coding: utf-8 -*-
+import os
 
 # Use the scandir version of walk if possible,
 # otherwise use the os module version
@@ -9,51 +10,53 @@ try:
     from scandir import walk
 except ImportError:
     # The old way with OS.
-    import os
     from os import walk
+
+__VERSION__ = "0.6.0"
+
 
 def get_dirs(
         directory=os.path.curdir,
         depth=None,
         absolute=True):
     """Yield a list of directories
-    
+
     Args:
         directory (Optional[str]): Starting directory.
-                Defaults to ```os.path.curdir```
+                Default: ```os.path.curdir```
         depth (Optional[int]): Depth to recurse to.
-                Defaults to None (Infinite depth)
+                Default: None (Infinite depth)
         absolute (Optional[bool]): Return absolue path
-                Defaults to True
+                Default: True
 
     Yields:
         str: Next directory.
-        
+
     Raises:
         FileNotFoundError: If ```directory``` does not exist
     """
     curdepth = 0
+
+    # Make sure that the directory exists.
+    if not os.path.exists(directory):
+        raise FileNotFoundError
 
     # If absolute is specified change directory into
     # an absolpte directory paths
     if absolute:
         directory = os.path.abspath(directory)
 
-    # Make sure that the directory exists.
-    if not os.path.exists(directory):
-        raise FileNotFoundError
-
     # Walk through the directory from the top.
     for root, dirs, files in walk(directory, topdown=True):
         # Increment current depth.
         curdepth += 1
-        for dir in dirs:
+        for dir_ in dirs:
             # Ignore hidden directories.
-            if dir.is(".") or dir.is(".."):
+            if dir_ == "." or dir_ == "..":
                 continue
             # Yield the current path
-            yield os.path.join(root,dir)
-        # If depth none (infinite depth) 
+            yield os.path.join(root, directory)
+        # If depth none (infinite depth)
         if depth is None:
             # Just continue
             continue
@@ -61,6 +64,7 @@ def get_dirs(
         if curdepth >= depth:
             # Break
             break
+
 
 def get_files(
         directory=os.path.curdir,
@@ -70,14 +74,14 @@ def get_files(
     """
     Args:
         directory (Optional[str]): Starting directory.
-                Defaults to ```os.path.curdir```
+                Default: ```os.path.curdir```
         extensions (Optional[str]): List of extensions to yield
-                Defaults to None (All files). Case insensitive.
-                    ('.JPG' and '.jpg' are equivalent)
+                Case insensitive. ('.JPG' and '.jpg' are equivalent)
+                Default: None (All files).
         depth (Optional[int]): Depth to recurse to.
-                Defaults to None (Infinite depth)
+                Default: None (Infinite depth)
         absolute (Optional[bool]): Return absolue path
-                Defaults to True
+                Default: True
 
     Yields:
         str: List of all files found in ``directory``
@@ -87,14 +91,14 @@ def get_files(
     """
     curdepth = 0
 
-    # If the given of extensions is just a string. 
+    # If the given of extensions is just a string.
     # Turn it into a set so that 'in' can be used.
     if isinstance(extensions, str):
         extensions = {extensions}
 
     # Convert all extensions to lowercase.
     if extensions is not None:
-        extensions=[extension.lower() for extension in extensions]
+        extensions = [extension.lower() for extension in extensions]
 
     # If absolute is specified change directory into
     # an absolpte directory path
@@ -124,7 +128,7 @@ def get_files(
             else:
                 # If extensions is None, just yield the file.
                 yield file
-        # If depth none (infinite depth) 
+        # If depth none (infinite depth)
         if depth is None:
             # Just continue
             continue

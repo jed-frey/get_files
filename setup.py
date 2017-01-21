@@ -1,11 +1,13 @@
 from setuptools import setup
 
-setup(name='get_files',
-      version='0.1',
-      description='The funniest joke in the world',
-      url='https://github.com/DadAtH-me/get_files',
-      author='dah',
-      author_email='get_files@dadatho.me',
-      license='MIT',
+__VERSION__ = "0.6.0"
+
+setup(name="get_files",
+      version=__VERSION__,
+      description="Simple module to get files and directories",
+      url='https://github.com/jed-frey/get_files',
+      author='Jed Frey',
+      author_email='jed-frey@users.noreply.github.com',
+      license='BSD',
       packages=['get_files'],
       zip_safe=False)
