@@ -55,7 +55,7 @@ def get_dirs(
             if dir_ == "." or dir_ == "..":
                 continue
             # Yield the current path
-            yield os.path.join(root, directory)
+            yield os.path.join(root, dir_)
         # If depth none (infinite depth)
         if depth is None:
             # Just continue
