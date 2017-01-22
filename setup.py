@@ -1,6 +1,6 @@
 from setuptools import setup
 
-__VERSION__ = "0.7.0"
+__VERSION__ = "0.7.1"
 
 setup(name="get_files",
       version=__VERSION__,
