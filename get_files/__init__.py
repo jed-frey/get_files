@@ -14,11 +14,15 @@ except ImportError:
 
 __VERSION__ = "0.7.1"
 
+def null(path):
+    return path
+
 
 def get_dirs(
         directory=os.path.curdir,
         depth=None,
-        absolute=True):
+        absolute=True,
+        decorate=null):
     """Yield a list of directories
 
     Args:
@@ -28,7 +32,10 @@ def get_dirs(
                 Default: None (Infinite depth)
         absolute (Optional[bool]): Return absolue path
                 Default: True
-
+        decorate (Optional[function]): Decorate the return path
+                with the given function.
+                Default: None (just return the path)
+                
     Yields:
         str: Next directory.
 
@@ -55,7 +62,7 @@ def get_dirs(
             if dir_ == "." or dir_ == "..":
                 continue
             # Yield the current path
-            yield os.path.join(root, dir_)
+            yield decorate(os.path.join(root, dir_))
         # If depth none (infinite depth)
         if depth is None:
             # Just continue
@@ -70,7 +77,8 @@ def get_files(
         directory=os.path.curdir,
         extensions=None,
         depth=None,
-        absolute=True):
+        absolute=True,
+        decorate=null):
     """
     Args:
         directory (Optional[str]): Starting directory.
@@ -82,7 +90,10 @@ def get_files(
                 Default: None (Infinite depth)
         absolute (Optional[bool]): Return absolue path
                 Default: True
-
+        decorate (Optional[function]): Decorate the return path
+                with the given function.
+                Default: None (just return the path)
+                
     Yields:
         str: List of all files found in ``directory``
 
@@ -124,10 +135,10 @@ def get_files(
                 # If the file extension is in the extensions list
                 # yield the file
                 if ext in extensions:
-                    yield file
+                    yield decorate(file)
             else:
                 # If extensions is None, just yield the file.
-                yield file
+                yield decorate(file)
         # If depth none (infinite depth)
         if depth is None:
             # Just continue

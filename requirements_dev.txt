@@ -1,0 +1,4 @@
+bumpversion
+pylint
+isort
+autopep8

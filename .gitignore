@@ -1,3 +1,14 @@
+## Local Python Ignores
+bin/
+lib64
+pip-selfcheck.json
+pyvenv.cfg
+share/
+
+
+
+## GitHub Python Ignores
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -87,3 +98,4 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
