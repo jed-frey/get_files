@@ -14,6 +14,7 @@ except ImportError:
 
 __VERSION__ = "0.7.1"
 
+
 def null(path):
     return path
 
@@ -35,7 +36,7 @@ def get_dirs(
         decorate (Optional[function]): Decorate the return path
                 with the given function.
                 Default: None (just return the path)
-                
+
     Yields:
         str: Next directory.
 
@@ -93,7 +94,7 @@ def get_files(
         decorate (Optional[function]): Decorate the return path
                 with the given function.
                 Default: None (just return the path)
-                
+
     Yields:
         str: List of all files found in ``directory``
 
